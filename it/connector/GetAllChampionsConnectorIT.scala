@@ -11,7 +11,9 @@ class GetAllChampionsConnectorIT extends PlaySpec with GuiceOneAppPerSuite {
 
   "getAllChampions" must {
     "return a list of all champions" in {
-      await(connector.getAllChampions) mustBe ""
+      val result = await(connector.getAllChampions)
+
+      result.isRight mustBe true
     }
   }
 }
