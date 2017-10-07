@@ -1,11 +1,8 @@
 package connectors.config
 
-import javax.inject.{Inject, Singleton}
-
 import play.api.Configuration
 
-@Singleton
-class ConnectorConfig @Inject()(config: Configuration) {
+class ConnectorConfig(config: Configuration) {
 
   private val configRoot: String = "riotgames.developer"
 

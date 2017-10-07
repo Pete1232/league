@@ -1,7 +1,5 @@
 package connectors.getAllChampions
 
-import javax.inject.{Inject, Singleton}
-
 import connectors.config.ConnectorConfig
 import connectors.getAllChampions.models.Champions
 import io.circe._
@@ -11,9 +9,8 @@ import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-@Singleton
-class GetAllChampionsConnector @Inject()(connectorConfig: ConnectorConfig)
-                                        (implicit wsClient: WSClient, ec: ExecutionContext) {
+class GetAllChampionsConnector(connectorConfig: ConnectorConfig)
+                              (implicit wsClient: WSClient, ec: ExecutionContext) {
 
   private val requestUrl = {
     import connectorConfig._
