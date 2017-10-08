@@ -1,6 +1,6 @@
 package connectors.getAllChampions
 
-import connectors.getAllChampions.models.Champion
+import connectors.getAllChampions.models.{Champion, ChampionStats}
 import org.scalatestplus.play.{BaseOneAppPerSuite, PlaySpec}
 import play.api.test.Helpers._
 import testutils.TestApplicationFactory
@@ -15,7 +15,7 @@ class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with Test
 
       result.isRight mustBe true
 
-      result.right.get.data("Annie") mustBe Champion("Annie", "the Dark Child")
+      result.right.get.data("Annie") mustBe Champion("Annie", "the Dark Child", ChampionStats(511.68, 76))
     }
   }
 }

@@ -1,7 +1,8 @@
 package connectors.getAllChampions
 
-import connectors.config.ConnectorConfig
+import connectors._
 import connectors.getAllChampions.models.Champions
+import connectors.utilities.ConnectorConfig
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -20,10 +21,10 @@ class GetAllChampionsConnector(connectorConfig: ConnectorConfig)
 
   def getAllChampions: Future[Either[Error, Champions]] =
     wsClient.url(requestUrl)
-      .withHttpHeaders("X-Riot-Token" -> connectorConfig.apiKey)
+      .withHttpHeaders(RIOT_TOKEN_HEADER_KEY -> connectorConfig.apiKey)
+      .withQueryStringParameters(TAGS.QUERY_KEY -> TAGS.STATS)
       .get()
       .map { res =>
-        println(res.headers)
         decode[Champions](res.body)
       }
 }

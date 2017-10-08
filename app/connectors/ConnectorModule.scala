@@ -1,7 +1,7 @@
 package connectors
 
-import connectors.config.ConnectorConfig
 import connectors.getAllChampions.GetAllChampionsConnector
+import connectors.utilities.ConnectorConfig
 import play.api.Configuration
 import play.api.libs.ws.WSClient
 
