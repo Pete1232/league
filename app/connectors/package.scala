@@ -6,4 +6,8 @@ package object connectors {
     val STATS = "stats"
   }
 
+  final object HTTP {
+    val GET = "GET"
+  }
+
 }

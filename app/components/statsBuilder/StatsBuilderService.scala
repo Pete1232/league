@@ -2,11 +2,9 @@ package components.statsBuilder
 
 import components._
 import connectors.getAllChampions.models.ChampionStats
-import play.api.Logger
+import utilities.Logging
 
-object StatsBuilderService {
-  val logger = Logger(this.getClass)
-
+object StatsBuilderService extends Logging {
   def getMaxBaseHp(championStats: ChampionStats): Double = {
     import championStats._
     val res = hp + hpperlevel * (MAX_LEVEL - 1)
