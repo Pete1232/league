@@ -6,7 +6,7 @@ import play.api.inject.DefaultApplicationLifecycle
 import play.api.{Application, ApplicationLoader, Configuration, Environment}
 import play.core.DefaultWebCommands
 
-trait TestApplicationFactory extends FakeApplicationFactory {
+trait CTTestApplicationFactory extends FakeApplicationFactory {
 
   private val env = Environment.simple()
   private val context = ApplicationLoader.Context(

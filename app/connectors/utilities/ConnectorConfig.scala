@@ -2,7 +2,7 @@ package connectors.utilities
 
 import play.api.Configuration
 
-class ConnectorConfig(config: Configuration) { //TODO this will all throw runtime errors if config is missing - should check on startup
+class ConnectorConfig(config: Configuration) {
 
   private val configRoot: String = "riotgames.developer"
 

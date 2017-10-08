@@ -13,11 +13,11 @@ trait ConnectorModule {
 
   def configuration: Configuration
 
-  implicit def wsClient: WSClient
+  implicit val wsClient: WSClient
 
-  implicit def executionContext: ExecutionContext
+  implicit val executionContext: ExecutionContext
 
-  lazy val connectorConfig: ConnectorConfig = wire[ConnectorConfig]
+  val connectorConfig: ConnectorConfig = wire[ConnectorConfig]
 
   lazy val getAllChampionsConnector: GetAllChampionsConnector = wire[GetAllChampionsConnector]
 }

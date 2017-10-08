@@ -3,9 +3,9 @@ package connectors.getAllChampions
 import connectors.getAllChampions.models.{Champion, ChampionStats}
 import org.scalatestplus.play.{BaseOneAppPerSuite, PlaySpec}
 import play.api.test.Helpers._
-import testutils.TestApplicationFactory
+import testutils.CTTestApplicationFactory
 
-class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with TestApplicationFactory {
+class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with CTTestApplicationFactory {
 
   lazy val connector: GetAllChampionsConnector = components.getAllChampionsConnector
 
