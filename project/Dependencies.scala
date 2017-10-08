@@ -31,7 +31,7 @@ object Dependencies {
   private val test: Seq[ModuleID] = Seq(
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2",
     "com.github.tomakehurst" % "wiremock" % "2.8.0"
-  ).map(_ % "test,it")
+  ).map(_ % "test,it,ct")
 
   def apply(): Seq[ModuleID] = compile ++ provided ++ test
 }

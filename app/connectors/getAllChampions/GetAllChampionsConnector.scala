@@ -2,9 +2,6 @@ package connectors.getAllChampions
 
 import connectors.config.ConnectorConfig
 import connectors.getAllChampions.models.Champions
-import io.circe._
-import io.circe.generic.auto._
-import io.circe.parser._
 import play.api.libs.ws.WSClient
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -14,12 +11,19 @@ class GetAllChampionsConnector(connectorConfig: ConnectorConfig)
 
   private val requestUrl = {
     import connectorConfig._
-    s"$scheme://$host/lol/platform/v3/champions"
+    s"$scheme://$host/lol/static-data/v3/champions"
   }
+
+  import io.circe._
+  import io.circe.generic.auto._
+  import io.circe.parser._
 
   def getAllChampions: Future[Either[Error, Champions]] =
     wsClient.url(requestUrl)
       .withHttpHeaders("X-Riot-Token" -> connectorConfig.apiKey)
       .get()
-      .map(res => decode[Champions](res.body))
+      .map { res =>
+        println(res.headers)
+        decode[Champions](res.body)
+      }
 }

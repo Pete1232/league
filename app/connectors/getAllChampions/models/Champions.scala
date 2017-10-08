@@ -1,3 +1,3 @@
 package connectors.getAllChampions.models
 
-case class Champions(champions: List[Champion])
+case class Champions(`type`: String, version: String, data: Map[String, Champion])
