@@ -22,7 +22,7 @@ class StatsBuilderController(getAllChampionsConnector: GetAllChampionsConnector,
         logger.debug(s"Received ${champions.toString.take(50)} from league servers")
         import io.circe.generic.auto._
         import io.circe.syntax._
-        Ok(champions.asJson)
+        Ok(views.html.test(champions.asJson))
     }
   }
 }

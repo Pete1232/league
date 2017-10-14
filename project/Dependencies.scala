@@ -21,7 +21,9 @@ object Dependencies {
   }
 
   private val compile: Seq[ModuleID] = Seq(
-    ws
+    ws,
+    "com.adrianhurt" %% "play-bootstrap" % "1.2-P26-B3",
+    "org.webjars" % "bootstrap" % "4.0.0-beta-1"
   ) ++ circe
 
   private val provided: Seq[ModuleID] = Seq(
