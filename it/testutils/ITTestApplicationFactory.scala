@@ -8,12 +8,14 @@ import play.core.DefaultWebCommands
 
 trait ITTestApplicationFactory extends FakeApplicationFactory {
 
+  def config: Configuration = Configuration.load(env)
+
   def env: Environment = Environment.simple()
   def context: ApplicationLoader.Context = ApplicationLoader.Context(
     environment = env,
     sourceMapper = None,
     webCommands = new DefaultWebCommands(),
-    initialConfiguration = Configuration.load(env),
+    initialConfiguration = config,
     lifecycle = new DefaultApplicationLifecycle()
   )
   lazy val components = new LeagueApplicationComponents(context)

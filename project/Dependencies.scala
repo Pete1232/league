@@ -30,7 +30,6 @@ object Dependencies {
 
   private val test: Seq[ModuleID] = Seq(
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2",
-    "com.github.tomakehurst" % "wiremock" % "2.8.0",
     "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0",
     "org.scalacheck" %% "scalacheck" % "1.13.4"
   ).map(_ % "test,it,ct")

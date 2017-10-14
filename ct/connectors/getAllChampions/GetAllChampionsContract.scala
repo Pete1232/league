@@ -9,13 +9,12 @@ class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with CTTe
 
   lazy val connector: GetAllChampionsConnector = components.getAllChampionsConnector
 
-  "The getAllChampions method" must {
-    "return a list of all champions without error" in {
-      val result = await(connector.getAllChampions)
+  "The successful response from the get all champions API" must {
 
-      result.isRight mustBe true
+    val result = await(connector.getAllChampions)
 
-      result.right.get.data("Annie") mustBe Champion("Annie", "the Dark Child", ChampionStats(511.68, 76))
+    "return a list of all champions" in {
+      result.right.map(_.data("Annie")) mustBe Right(Champion("Annie", "the Dark Child", ChampionStats(511.68, 76)))
     }
   }
 }

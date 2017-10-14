@@ -1,0 +1,34 @@
+{
+  "type": "champion",
+  "version": "7.20.2",
+  "data": {
+    "MonkeyKing": {
+      "title": "the Monkey King",
+      "stats": {
+        "armorperlevel": 3.5,
+        "attackdamage": 59.876,
+        "mpperlevel": 38,
+        "attackspeedoffset": -0.05,
+        "mp": 265.84,
+        "armor": 24.88,
+        "hp": 577.8,
+        "hpregenperlevel": 0.65,
+        "attackspeedperlevel": 3,
+        "attackrange": 175,
+        "movespeed": 345,
+        "attackdamageperlevel": 3.2,
+        "mpregenperlevel": 0.65,
+        "critperlevel": 0,
+        "spellblockperlevel": 1.25,
+        "crit": 0,
+        "mpregen": 8.042,
+        "spellblock": 32.1,
+        "hpregen": 6.192,
+        "hpperlevel": 85
+      },
+      "id": 62,
+      "key": "MonkeyKing",
+      "name": "Wukong"
+    }
+  }
+}

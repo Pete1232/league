@@ -12,7 +12,7 @@ lazy val league = (project in file("."))
   )
   .settings(
     inConfig(IntegrationTest)(
-      Defaults.itSettings ++
+      Defaults.testSettings ++
         projectItSettings
     ): _*
   )

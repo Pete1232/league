@@ -9,7 +9,7 @@ import scala.concurrent.{ExecutionContext, Future}
 
 class GetAllChampionsConnector(connectorConfig: ConnectorConfig)
                               (implicit wsClient: WSClient, ec: ExecutionContext) extends ConnectorLogging {
-  private val requestUrl = {
+  private lazy val requestUrl = {
     import connectorConfig._
     s"$scheme://$host/lol/static-data/v3/champions"
   }
