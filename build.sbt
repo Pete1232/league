@@ -22,7 +22,10 @@ lazy val league = (project in file("."))
         projectContractSettings
     ): _*
   )
-  .settings(libraryDependencies ++= Dependencies())
+  .settings(
+    libraryDependencies ++= Dependencies(),
+    dependencyOverrides ++= DependencyOverrides()
+  )
 
 lazy val projectItSettings = Seq(
   scalaSource := baseDirectory.value / "it",
