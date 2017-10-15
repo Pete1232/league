@@ -3,7 +3,7 @@ package config
 import com.softwaremill.macwire.wire
 import components.statsBuilder.StatsBuilderModule
 import connectors.ConnectorModule
-import controllers.AssetsComponents
+import controllers.{AssetsComponents, AssetsFinder}
 import play.api.ApplicationLoader.Context
 import play.api.i18n.I18nComponents
 import play.api.libs.ws.ahc.AhcWSComponents
@@ -25,6 +25,8 @@ class LeagueApplicationComponents(context: Context) extends BuiltInComponentsFro
   }
 
   lazy val mode: Mode = context.environment.mode
+
+  override val implicitAssetsFinder: AssetsFinder = assetsFinder
 
   lazy val router: Router = {
     // add the prefix string in local scope for the Routes constructor

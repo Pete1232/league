@@ -1,0 +1,39 @@
+@import connectors.getAllChampions.models.Champions
+
+@(champions: Champions)(implicit assetsFinder: AssetsFinder)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Champion List</title>
+        <link rel="stylesheet" media="screen" href="@assetsFinder.path("lib/bootstrap/css/bootstrap.css")">
+    </head>
+    <body>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Title</th>
+                    <th>HP</th>
+                    <th>HP per level</th>
+                </tr>
+            </thead>
+            <tbody>@for(champion <- champions.data) {
+                <tr>
+                    <td>@{
+                        champion._1
+                    }</td>
+                    <td>@{
+                        champion._2.title
+                    }</td>
+                    <td>@{
+                        champion._2.stats.hp
+                    }</td>
+                    <td>@{
+                        champion._2.stats.hpperlevel
+                    }</td>
+                </tr>
+            }</tbody>
+        </table>
+    </body>
+</html>

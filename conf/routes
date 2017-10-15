@@ -3,8 +3,9 @@
 # https://www.playframework.com/documentation/latest/ScalaRouting
 # ~~~~
 
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+# Map static resources using values in config. See https://www.playframework.com/documentation/2.6.x/AssetsOverview
+# As far as I can tell there is no way around the deprication warning - this was likely intended for the source code
+GET        /assets/*file          controllers.Assets.versioned(file)
 
 # Champion list
-GET     /champions/list             components.statsBuilder.StatsBuilderController.displayChampions
+GET        /champions/list        components.statsBuilder.StatsBuilderController.displayChampions

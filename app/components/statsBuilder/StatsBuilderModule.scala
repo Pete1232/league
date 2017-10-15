@@ -1,6 +1,7 @@
 package components.statsBuilder
 
 import connectors.getAllChampions.GetAllChampionsConnector
+import controllers.AssetsFinder
 import play.api.Configuration
 import play.api.mvc.ControllerComponents
 
@@ -17,6 +18,8 @@ trait StatsBuilderModule {
   val controllerComponents: ControllerComponents
 
   implicit val executionContext: ExecutionContext
+
+  implicit val implicitAssetsFinder: AssetsFinder
 
   lazy val statsBuilderController: StatsBuilderController = wire[StatsBuilderController]
 }
