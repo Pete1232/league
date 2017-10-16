@@ -6,7 +6,11 @@ import play.api.inject.DefaultApplicationLifecycle
 import play.api.{Application, ApplicationLoader, Configuration, Environment}
 import play.core.DefaultWebCommands
 
+import scala.concurrent.ExecutionContext
+
 trait CTTestApplicationFactory extends FakeApplicationFactory {
+
+  implicit val ec: ExecutionContext = ExecutionContext.global
 
   private val env = Environment.simple()
   private val context = ApplicationLoader.Context(

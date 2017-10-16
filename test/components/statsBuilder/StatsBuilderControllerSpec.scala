@@ -1,6 +1,7 @@
 package components.statsBuilder
 
-import connectors.getAllChampions.GetAllChampionsConnector
+import cats.effect.IO
+import connectors.getAllChampions.{GetAllChampionsConnector, GetAllChampionsService}
 import connectors.getAllChampions.models.{Champion, ChampionStats, Champions}
 import controllers.AssetsFinder
 import play.api.http.Status
@@ -9,7 +10,7 @@ import play.api.test.FakeRequest
 import play.api.test.Helpers._
 import testutils.ControllerTestBase
 
-import scala.concurrent.Future
+import scala.concurrent.{ExecutionContext, Future}
 
 class StatsBuilderControllerSpec extends ControllerTestBase {
 
@@ -23,15 +24,15 @@ class StatsBuilderControllerSpec extends ControllerTestBase {
 
   implicit lazy val assetsFinder: AssetsFinder = mock[AssetsFinder]
 
-  lazy val mockChampionsConnector: GetAllChampionsConnector = mock[GetAllChampionsConnector]
+  lazy val mockChampionsService: GetAllChampionsService = mock[GetAllChampionsService]
 
-  lazy val controller: StatsBuilderController = new StatsBuilderController(mockChampionsConnector, mockControllerComponents)
+  lazy val controller: StatsBuilderController = new StatsBuilderController(mockChampionsService, mockControllerComponents)
 
   "Calling displayChampions when champion data was retrieved successfully" must {
 
     assetsFinder.path _ expects "lib/bootstrap/css/bootstrap.css" returning ""
 
-    mockChampionsConnector.getAllChampions _ expects() returning Future.successful(Right(mockedChampionDetails))
+    (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO(Right(mockedChampionDetails))
 
     val request = FakeRequest()
 

@@ -1,6 +1,6 @@
 package components.statsBuilder
 
-import connectors.getAllChampions.GetAllChampionsConnector
+import connectors.getAllChampions.GetAllChampionsService
 import connectors.utilities.CirceWriteable
 import controllers.AssetsFinder
 import play.api.Logger
@@ -8,20 +8,22 @@ import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponent
 
 import scala.concurrent.ExecutionContext
 
-class StatsBuilderController(getAllChampionsConnector: GetAllChampionsConnector, controllerComponents: ControllerComponents)
+class StatsBuilderController(getAllChampionsService: GetAllChampionsService, controllerComponents: ControllerComponents)
                             (implicit ec: ExecutionContext, assetsFinder: AssetsFinder)
   extends AbstractController(controllerComponents) with CirceWriteable {
 
   val logger = Logger(this.getClass)
 
-  def displayChampions: Action[AnyContent] = Action.async {
+  def displayChampions: Action[AnyContent] = {
 
     logger.debug("Request displayChampions started")
 
-    getAllChampionsConnector.getAllChampions.map {
+    getAllChampionsService.getAllChampions.map {
       case Right(champions) =>
         logger.debug(s"Received ${champions.toString.take(50)} from league servers")
         Ok(components.statsBuilder.views.html.championsList(champions))
-    }
+    }.map(res =>
+      Action(res)
+    ).unsafeRunSync()
   }
 }

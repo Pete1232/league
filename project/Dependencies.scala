@@ -22,7 +22,9 @@ object Dependencies {
 
   private val compile: Seq[ModuleID] = Seq(
     ws,
-    "org.webjars" % "bootstrap" % "4.0.0-beta-1"
+    ehcache,
+    "org.webjars" % "bootstrap" % "4.0.0-beta-1",
+    "org.typelevel" %% "cats-effect" % "0.4"
   ) ++ circe
 
   private val provided: Seq[ModuleID] = Seq(
@@ -32,7 +34,8 @@ object Dependencies {
   private val test: Seq[ModuleID] = Seq(
     "org.scalatestplus.play" %% "scalatestplus-play" % "3.1.2",
     "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0",
-    "org.scalacheck" %% "scalacheck" % "1.13.4"
+    "org.scalacheck" %% "scalacheck" % "1.13.4",
+    "org.typelevel" %% "cats-effect-laws" % "0.4"
   ).map(_ % "test,it,ct")
 
   def apply(): Seq[ModuleID] = compile ++ provided ++ test
