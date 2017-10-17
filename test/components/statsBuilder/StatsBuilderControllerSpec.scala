@@ -1,7 +1,7 @@
 package components.statsBuilder
 
 import cats.effect.IO
-import connectors.getAllChampions.{GetAllChampionsConnector, GetAllChampionsService}
+import connectors.getAllChampions.GetAllChampionsService
 import connectors.getAllChampions.models.{Champion, ChampionStats, Champions}
 import controllers.AssetsFinder
 import play.api.http.Status
