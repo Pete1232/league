@@ -1,0 +1,18 @@
+version: 0.2
+
+phases:
+  pre_build:
+    commands:
+      - sbt playUpdateSecret
+  build:
+    commands:
+      - sbt clean test it:test
+  post_build:
+    commands:
+      - sbt assembly
+
+artifacts:
+  files:
+    - appspec.yml
+    - start.sh
+    - target/scala-2.12/league-assembly-0.1-SNAPSHOT.jar

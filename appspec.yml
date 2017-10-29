@@ -1,0 +1,9 @@
+version: 0.0
+os: linux
+files:
+  - source: ./target/scala-2.12/league-assembly-0.1-SNAPSHOT.jar
+    destination: /tmp
+hooks:
+  AfterInstall:
+    - location: start.sh
+      timeout: 60

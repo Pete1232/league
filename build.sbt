@@ -26,6 +26,14 @@ lazy val league = (project in file("."))
     libraryDependencies ++= Dependencies(),
     dependencyOverrides ++= DependencyOverrides()
   )
+  .settings(
+    mainClass in assembly := Some("play.core.server.ProdServerStart"),
+    fullClasspath in assembly += Attributed.blank(PlayKeys.playPackageAssets.value),
+    assemblyMergeStrategy in assembly := {
+      case PathList(xs@_*) if xs.last endsWith ".conf" => MergeStrategy.concat
+      case x => (assemblyMergeStrategy in assembly).value(x)
+    }
+  )
 
 lazy val projectItSettings = Seq(
   configuration := configuration.value extend Test,
