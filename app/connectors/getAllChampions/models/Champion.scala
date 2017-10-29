@@ -1,3 +1,3 @@
 package connectors.getAllChampions.models
 
-case class Champion(key: String, title: String, stats: ChampionStats)
+case class Champion(name: String, title: String, stats: ChampionStats)

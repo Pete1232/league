@@ -9,7 +9,7 @@ import play.api.mvc.{BodyParsers, ControllerComponents, DefaultActionBuilder}
 
 import scala.concurrent.ExecutionContext
 
-abstract class ControllerTestBase extends PlaySpec with MockFactory with OneInstancePerTest {
+abstract class ControllerTestBase extends PlaySpec with MockFactory with OneInstancePerTest with SharedTestFixtures {
 
   implicit val system: ActorSystem = ActorSystem(this.getClass.getSimpleName)
 

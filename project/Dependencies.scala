@@ -12,6 +12,11 @@ object Dependencies {
     ).map(_ % version)
   }
 
+  private val akkaStreamUtils = Seq(
+    "de.knutwalker" %% "akka-stream-circe" % "3.4.0",
+    "de.knutwalker" %% "akka-http-circe" % "3.4.0"
+  )
+
   private val macwire = {
     val version = "2.3.0"
     Seq(
@@ -25,7 +30,7 @@ object Dependencies {
     ehcache,
     "org.webjars" % "bootstrap" % "4.0.0-beta-1",
     "org.typelevel" %% "cats-effect" % "0.4"
-  ) ++ circe
+  ) ++ circe ++ akkaStreamUtils
 
   private val provided: Seq[ModuleID] = Seq(
   ) ++ macwire

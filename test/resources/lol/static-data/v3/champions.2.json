@@ -1,0 +1,62 @@
+{
+  "type": "champion",
+  "version": "7.20.2",
+  "data": {
+    "MonkeyKing": {
+      "title": "the Monkey King",
+      "stats": {
+        "armorperlevel": 3.5,
+        "attackdamage": 59.876,
+        "mpperlevel": 38,
+        "attackspeedoffset": -0.05,
+        "mp": 265.84,
+        "armor": 24.88,
+        "hp": 577.8,
+        "hpregenperlevel": 0.65,
+        "attackspeedperlevel": 3,
+        "attackrange": 175,
+        "movespeed": 345,
+        "attackdamageperlevel": 3.2,
+        "mpregenperlevel": 0.65,
+        "critperlevel": 0,
+        "spellblockperlevel": 1.25,
+        "crit": 0,
+        "mpregen": 8.042,
+        "spellblock": 32.1,
+        "hpregen": 6.192,
+        "hpperlevel": 85
+      },
+      "id": 62,
+      "key": "MonkeyKing",
+      "name": "Wukong"
+    },
+    "Annie": {
+      "title": "the Dark Child",
+      "stats": {
+        "armorperlevel": 4,
+        "attackdamage": 50.41,
+        "mpperlevel": 50,
+        "attackspeedoffset": 0.08,
+        "mp": 334,
+        "armor": 19.22,
+        "hp": 511.68,
+        "hpregenperlevel": 0.55,
+        "attackspeedperlevel": 1.36,
+        "attackrange": 575,
+        "movespeed": 335,
+        "attackdamageperlevel": 2.625,
+        "mpregenperlevel": 0.8,
+        "critperlevel": 0,
+        "spellblockperlevel": 0.5,
+        "crit": 0,
+        "mpregen": 6,
+        "spellblock": 30,
+        "hpregen": 5.424,
+        "hpperlevel": 76
+      },
+      "id": 1,
+      "key": "Annie",
+      "name": "Annie"
+    }
+  }
+}

@@ -1,7 +1,7 @@
 val APP_NAME = "league"
 val SCALA_VERSION = "2.12.3"
 
-lazy val ContractTest = config("ct") extend Test // integration tests not using caching and affected by rate-limiting
+lazy val ContractTest = config("ct") extend Test
 
 lazy val league = (project in file("."))
   .enablePlugins(PlayScala)
@@ -28,6 +28,7 @@ lazy val league = (project in file("."))
   )
 
 lazy val projectItSettings = Seq(
+  configuration := configuration.value extend Test,
   scalaSource := baseDirectory.value / "it",
   resourceDirectory := baseDirectory.value / "it" / "resources",
   parallelExecution := false

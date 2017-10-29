@@ -1,13 +1,13 @@
 package components.statsBuilder.views
 
-import connectors.getAllChampions.models.{Champion, ChampionStats, Champions}
 import controllers.AssetsFinder
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.OneInstancePerTest
 import org.scalatestplus.play.PlaySpec
 import play.api.test.Helpers._
+import testutils.SharedTestFixtures
 
-class StatsBuilderViewSpec extends PlaySpec with MockFactory with OneInstancePerTest {
+class StatsBuilderViewSpec extends PlaySpec with MockFactory with OneInstancePerTest with SharedTestFixtures {
 
   implicit lazy val assetsFinder: AssetsFinder = mock[AssetsFinder]
 
@@ -17,15 +17,7 @@ class StatsBuilderViewSpec extends PlaySpec with MockFactory with OneInstancePer
 
     assetsFinder.path _ expects "lib/bootstrap/css/bootstrap.css" returning assetsTestLocation
 
-    val mockedChampionDetails = Champions(
-      "champion",
-      "7.20.2",
-      Map(
-        "Annie" -> Champion("Annie", "the Dark Child", ChampionStats(511.68, 76))
-      )
-    )
-
-    lazy val view = components.statsBuilder.views.html.championsList(mockedChampionDetails)(assetsFinder)
+    lazy val view = components.statsBuilder.views.html.championsList(champions.model)(assetsFinder)
 
     lazy val viewAsString = contentAsString(view)
 
@@ -34,26 +26,17 @@ class StatsBuilderViewSpec extends PlaySpec with MockFactory with OneInstancePer
     }
     "display the given champions name" in {
       viewAsString must include(
-        """<td>Annie</td>""".stripMargin
+        """<td>Wukong</td>""".stripMargin
       )
     }
     "display the given champions title" in {
       viewAsString must include(
-        """<td>the Dark Child</td>""".stripMargin
+        """<td>the Monkey King</td>""".stripMargin
       )
     }
     "display multiple champions" in {
 
-      val mockedChampionDetails = Champions(
-        "champion",
-        "7.20.2",
-        Map(
-          "Annie" -> Champion("Annie", "the Dark Child", ChampionStats(511.68, 76)),
-          "Wukong" -> Champion("Wukong", "the Monkey King", ChampionStats(577.8, 85))
-        )
-      )
-
-      lazy val view = components.statsBuilder.views.html.championsList(mockedChampionDetails)(assetsFinder)
+      lazy val view = components.statsBuilder.views.html.championsList(champions2.model)(assetsFinder)
 
       lazy val viewAsString = contentAsString(view)
 

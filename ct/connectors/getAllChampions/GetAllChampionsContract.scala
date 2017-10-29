@@ -5,9 +5,9 @@ import connectors.utilities.ConnectorConfig
 import org.scalatestplus.play.{BaseOneAppPerSuite, PlaySpec}
 import play.api.Configuration
 import play.api.test.Helpers._
-import testutils.CTTestApplicationFactory
+import testutils.{CTTestApplicationFactory, SharedTestFixtures}
 
-class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with CTTestApplicationFactory {
+class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with CTTestApplicationFactory with SharedTestFixtures {
 
   lazy val defaultConnector: GetAllChampionsConnector = components.getAllChampionsConnector
 
@@ -29,7 +29,7 @@ class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with CTTe
         .map(_.as[Champions])
         .right.get
 
-      result.right.map(_.data("Annie")) mustBe Right(Champion("Annie", "the Dark Child", ChampionStats(511.68, 76)))
+      result.right.map(_.data("Annie")) mustBe Right(champions2.model.data("Annie"))
     }
 
     "return a parsed forbidden exception if the API key was invalid" in {
@@ -38,7 +38,7 @@ class GetAllChampionsContract extends PlaySpec with BaseOneAppPerSuite with CTTe
         .map(_.as[LolErrorResponse])
         .right.get
 
-      result.right.get mustBe LolErrorResponse(LolErrorStatus("Forbidden", 403))
+      result.right.get mustBe forbidden.model
     }
   }
 }

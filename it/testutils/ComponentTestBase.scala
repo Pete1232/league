@@ -7,7 +7,7 @@ import play.api.{BuiltInComponentsFromContext, Mode}
 import play.core.server.ServerConfig
 import play.filters.HttpFiltersComponents
 
-abstract class ComponentTestBase extends PlaySpec with ITTestApplicationFactory with BaseOneServerPerTest {
+abstract class ComponentTestBase extends PlaySpec with ITTestApplicationFactory with BaseOneServerPerTest with SharedTestFixtures {
 
   import play.api.mvc._
   import play.api.routing.sird._
