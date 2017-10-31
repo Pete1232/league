@@ -1,6 +1,7 @@
 package connectors.getAllChampions
 
 import connectors.getAllChampions.models._
+import connectors.models.LolErrorResponse
 import connectors.utilities.ConnectorConfig
 import org.scalatestplus.play.{BaseOneAppPerSuite, PlaySpec}
 import play.api.Configuration

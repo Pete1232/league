@@ -2,7 +2,8 @@ package testutils
 
 import java.io.File
 
-import connectors.getAllChampions.models.{Champions, LolErrorResponse}
+import connectors.getAllChampions.models.Champions
+import connectors.models.LolErrorResponse
 
 import scala.io.Source
 
