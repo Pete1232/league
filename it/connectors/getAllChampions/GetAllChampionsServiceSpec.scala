@@ -62,7 +62,7 @@ class GetAllChampionsServiceSpec extends PlaySpec with MockFactory with MockCach
 
       val result = service.getAllChampions.unsafeRunSync()
 
-      result mustBe Left(JsonErrorResponse(error.message))
+      result mustBe Left(JsonErrorResponse(s"${error.message} ${error.history}"))
     }
     s"return an $JsonErrorResponse if a parsing failure occurred" in {
 

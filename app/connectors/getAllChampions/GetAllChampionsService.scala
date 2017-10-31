@@ -3,12 +3,16 @@ package connectors.getAllChampions
 import cats.effect.IO
 import connectors.getAllChampions.models._
 import connectors.models.{ErrorResponse, JsonErrorResponse, LolErrorResponse}
-import io.circe.{DecodingFailure, ParsingFailure}
+import io.circe
+import io.circe.{DecodingFailure, Json, ParsingFailure}
+import play.api.Logger
 import play.api.cache.AsyncCacheApi
 
 import scala.concurrent.ExecutionContext
 
 class GetAllChampionsService(cache: AsyncCacheApi, getAllChampionsConnector: GetAllChampionsConnector) {
+
+  val logger: Logger = Logger(this.getClass)
 
   def getAllChampions(implicit ec: ExecutionContext): IO[Either[ErrorResponse, Champions]] = {
 
@@ -16,20 +20,28 @@ class GetAllChampionsService(cache: AsyncCacheApi, getAllChampionsConnector: Get
     import cats.implicits._
     import io.circe.generic.auto._
 
+    def handleFailure(e: circe.Error): JsonErrorResponse = e match {
+      case d: DecodingFailure =>
+        logger.warn(s"Error decoding $LolErrorResponse ${d.message} ${d.history}")
+        JsonErrorResponse(s"${d.message} ${d.history}")
+      case p: ParsingFailure =>
+        logger.warn(s"Error parsing $Json ${p.message}")
+        JsonErrorResponse(p.message)
+    }
+
     IO.fromFuture(
       Eval.now(cache.getOrElseUpdate("championsList") {
         getAllChampionsConnector.getAllChampions
-          .leftMap {
-            case d: DecodingFailure => JsonErrorResponse(d.message)
-            case p: ParsingFailure => JsonErrorResponse(p.message)
-          }
-          .subflatMap(res => res.as[Champions]
-            .leftMap(_ => res.as[LolErrorResponse]
-              .fold(d => JsonErrorResponse(s"${d.message} ${d.history}"), identity)
-            )
-            .map(identity)
-          )
-          .value
+          .leftMap(handleFailure)
+          .subflatMap { res =>
+            res.as[Champions]
+              .leftMap { res2 =>
+                handleFailure(res2)
+                res.as[LolErrorResponse]
+                  .fold(handleFailure, identity)
+              }
+              .map(identity)
+          }.value
       })
     )
   }
