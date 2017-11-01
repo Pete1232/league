@@ -29,19 +29,21 @@ class GetAllChampionsService(cache: AsyncCacheApi, getAllChampionsConnector: Get
         JsonErrorResponse(p.message)
     }
 
+    def parseJson(json: Json) = {
+      json.as[Champions]
+        .leftMap { res2 =>
+          handleFailure(res2)
+          json.as[LolErrorResponse]
+            .fold(handleFailure, identity)
+        }
+    }
+
     IO.fromFuture(
       Eval.now(cache.getOrElseUpdate("championsList") {
         getAllChampionsConnector.getAllChampions
           .leftMap(handleFailure)
-          .subflatMap { res =>
-            res.as[Champions]
-              .leftMap { res2 =>
-                handleFailure(res2)
-                res.as[LolErrorResponse]
-                  .fold(handleFailure, identity)
-              }
-              .map(identity)
-          }.value
+          .subflatMap(parseJson)
+          .value
       })
     )
   }
