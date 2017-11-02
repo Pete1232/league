@@ -6,6 +6,7 @@ import org.scalamock.scalatest.MockFactory
 import org.scalatest.OneInstancePerTest
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatestplus.play.PlaySpec
+import play.api.i18n.DefaultMessagesApi
 import play.api.mvc.{BodyParsers, ControllerComponents, DefaultActionBuilder}
 
 import scala.concurrent.ExecutionContext
@@ -20,5 +21,7 @@ abstract class ControllerTestBase extends PlaySpec with GeneratorDrivenPropertyC
   implicit val ec: ExecutionContext = ExecutionContext.global
 
   lazy val mockControllerComponents: ControllerComponents = stub[ControllerComponents]
+
   mockControllerComponents.actionBuilder _ when() returns DefaultActionBuilder(new BodyParsers.Default)
+  mockControllerComponents.messagesApi _ when() returns new DefaultMessagesApi()
 }

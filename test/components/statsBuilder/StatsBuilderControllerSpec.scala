@@ -169,7 +169,7 @@ class StatsBuilderControllerSpec extends ControllerTestBase {
 
       lazy val result: Future[Result] = controller.displayChampions(request)
 
-      contentAsString(result) mustBe _root_.views.html.errorModel("A serious error occurred").body
+      contentAsString(result) mustBe _root_.views.html.errorModel("errors.generic").body
     }
   }
 }
