@@ -31,6 +31,11 @@ class StatsBuilderController(getAllChampionsService: GetAllChampionsService, con
           case e: ErrorResponse =>
             ServiceUnavailable(errorModel(e.message))
         }
+    }.attempt.map {
+      case Left(e) =>
+        logger.warn(e.getMessage)
+        ServiceUnavailable(errorModel("A serious error occurred"))
+      case Right(res) => res
     }.map(Action(_)).unsafeRunSync()
   }
 }

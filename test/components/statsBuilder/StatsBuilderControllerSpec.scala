@@ -150,4 +150,26 @@ class StatsBuilderControllerSpec extends ControllerTestBase {
       }
     }
   }
+
+  "Calling displayChampions when an unhandled exception occurred" must {
+
+    val request = FakeRequest()
+
+    s"return $SERVICE_UNAVAILABLE" in {
+
+      (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO.raiseError(new Exception(""))
+
+      lazy val result: Future[Result] = controller.displayChampions(request)
+
+      status(result) mustBe SERVICE_UNAVAILABLE
+    }
+    "display a generic error page" in {
+
+      (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO.raiseError(new Exception(""))
+
+      lazy val result: Future[Result] = controller.displayChampions(request)
+
+      contentAsString(result) mustBe _root_.views.html.errorModel("A serious error occurred").body
+    }
+  }
 }
