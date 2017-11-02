@@ -1,10 +1,12 @@
 package components.statsBuilder
 
+import _root_.views.html.errorModel
 import connectors.getAllChampions.GetAllChampionsService
+import connectors.models.LolErrorResponse
 import connectors.utilities.CirceWriteable
 import controllers.AssetsFinder
 import play.api.Logger
-import play.api.mvc.{AbstractController, Action, AnyContent, ControllerComponents}
+import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
@@ -22,6 +24,8 @@ class StatsBuilderController(getAllChampionsService: GetAllChampionsService, con
       case Right(champions) =>
         logger.debug(s"Received ${champions.toString.take(50)} from league servers")
         Ok(components.statsBuilder.views.html.championsList(champions))
+      case Left(LolErrorResponse(statusModel)) =>
+        Status(statusModel.status_code)(errorModel(statusModel.message))
     }.map(res =>
       Action(res)
     ).unsafeRunSync()

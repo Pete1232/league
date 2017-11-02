@@ -4,12 +4,14 @@ import akka.actor.ActorSystem
 import akka.stream.ActorMaterializer
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.OneInstancePerTest
+import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatestplus.play.PlaySpec
 import play.api.mvc.{BodyParsers, ControllerComponents, DefaultActionBuilder}
 
 import scala.concurrent.ExecutionContext
 
-abstract class ControllerTestBase extends PlaySpec with MockFactory with OneInstancePerTest with SharedTestFixtures {
+abstract class ControllerTestBase extends PlaySpec with GeneratorDrivenPropertyChecks with MockFactory
+  with OneInstancePerTest with SharedTestFixtures {
 
   implicit val system: ActorSystem = ActorSystem(this.getClass.getSimpleName)
 

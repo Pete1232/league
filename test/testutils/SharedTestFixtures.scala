@@ -4,10 +4,13 @@ import java.io.File
 
 import connectors.getAllChampions.models.Champions
 import connectors.models.LolErrorResponse
+import org.scalacheck.Shrink
 
 import scala.io.Source
 
 trait SharedTestFixtures {
+
+  implicit def noShrink[T]: Shrink[T] = Shrink(_ => Stream.empty[T])
 
   private val staticDataRoute = "test/resources/lol/static-data/v3"
 

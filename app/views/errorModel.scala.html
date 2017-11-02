@@ -1,0 +1,15 @@
+@(message: String)(implicit assetsFinder: AssetsFinder)
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Error</title>
+        <link rel="stylesheet" media="screen" href="@assetsFinder.path("lib/bootstrap/css/bootstrap.css")">
+    </head>
+    <body>
+        <h1>Service Unavailable</h1>
+        <h2>@{
+            message
+        }</h2>
+    </body>
+</html>
