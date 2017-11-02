@@ -2,7 +2,7 @@ package components.statsBuilder
 
 import cats.effect.IO
 import connectors.getAllChampions.GetAllChampionsService
-import connectors.models.{LolErrorResponse, LolErrorStatus}
+import connectors.models.{ErrorResponse, JsonErrorResponse, LolErrorResponse, LolErrorStatus}
 import controllers.AssetsFinder
 import org.scalacheck.Gen
 import play.api.http.Status
@@ -74,7 +74,7 @@ class StatsBuilderControllerSpec extends ControllerTestBase {
         status(result) mustBe statusCode
       }
     }
-    "return the error message in the body of the request" in {
+    "return the error message in the body of the page" in {
 
       val messageBodyGen = Gen.alphaNumStr
 
@@ -85,6 +85,68 @@ class StatsBuilderControllerSpec extends ControllerTestBase {
         lazy val result: Future[Result] = controller.displayChampions(request)
 
         contentAsString(result) mustBe _root_.views.html.errorModel(message).body
+      }
+    }
+  }
+
+  s"Calling displayChampions when an $JsonErrorResponse was returned" must {
+
+    val request = FakeRequest()
+
+    s"return a $SERVICE_UNAVAILABLE status" in {
+
+      (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO(Left(JsonErrorResponse("")))
+
+      lazy val result: Future[Result] = controller.displayChampions(request)
+
+      status(result) mustBe SERVICE_UNAVAILABLE
+    }
+    "return the error message in the body of the page" in {
+
+      val messageBodyGen = Gen.alphaNumStr
+
+      forAll(messageBodyGen) { message: String =>
+
+        (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO(Left(JsonErrorResponse(message)))
+
+        lazy val result: Future[Result] = controller.displayChampions(request)
+
+        contentAsString(result) mustBe _root_.views.html.errorModel(message).body
+      }
+    }
+  }
+
+  "Calling displayChampions when an generic ErrorResponse was returned" must {
+
+    val request = FakeRequest()
+
+    s"return a $SERVICE_UNAVAILABLE status" in {
+
+      val errorResponse = new ErrorResponse {
+        override val message = "testMessage"
+      }
+
+      (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO(Left(errorResponse))
+
+      lazy val result: Future[Result] = controller.displayChampions(request)
+
+      status(result) mustBe SERVICE_UNAVAILABLE
+    }
+    "return the error message in the body of the page" in {
+
+      val messageBodyGen = Gen.alphaNumStr
+
+      forAll(messageBodyGen) { m: String =>
+
+        val errorResponse = new ErrorResponse {
+          override val message: String = m
+        }
+
+        (mockChampionsService.getAllChampions(_: ExecutionContext)) expects * returning IO(Left(errorResponse))
+
+        lazy val result: Future[Result] = controller.displayChampions(request)
+
+        contentAsString(result) mustBe _root_.views.html.errorModel(m).body
       }
     }
   }
